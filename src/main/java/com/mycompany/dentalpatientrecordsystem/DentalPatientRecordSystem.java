@@ -9,11 +9,11 @@ package com.mycompany.dentalpatientrecordsystem;
  * @author Marki Querequincia
  */
 
-import javax.swing.*;
+
 public class DentalPatientRecordSystem {
     
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        System.out.println("It ran!");
         loginPopUp login = new loginPopUp();
         login.displayForm();
     }
