@@ -4,9 +4,11 @@
  */
 package com.mycompany.dentalpatientrecordsystem;
 
-import java.awt.Color;
 import java.awt.*;
+import java.sql.SQLException;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,6 +22,32 @@ public class DashBoard extends javax.swing.JFrame {
     public DashBoard() {
         initComponents();
     }
+
+        public void updatePatientRecordTable() {
+        try {
+            // Create a new instance of the Database class
+            Database db = new Database();
+
+            // Fetch the data from the database
+            List<Object[]> data = db.read();
+
+            // Get the table model
+            DefaultTableModel model = (DefaultTableModel) patientRecordTable.getModel();
+
+            // Clear the existing data in the table
+            model.setRowCount(0);
+
+            // Add the fetched data to the table model
+            for (Object[] row : data) {
+                model.addRow(row);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
