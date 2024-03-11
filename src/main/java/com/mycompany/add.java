@@ -3,6 +3,7 @@ private void createCreateButtonActionPerformed(java.awt.event.ActionEvent evt) {
     JOptionPane.showMessageDialog(this, "Please fill in all the information.");
     } else {
         DefaultTableModel ptnRecordsTable = (DefaultTableModel)patientRecordTable.getModel();
+        DefaultTableModel ptnHistoryTable = (DefaultTableModel)patientHistoryTable.getModel();  // Assuming patientHistoryTable is the JTable for the patientvisit table
         int nextId = ptnRecordsTable.getRowCount() + 1; // Get the next ID
         String data[] = {String.valueOf(nextId), givenNameCreateText.getText(),middleNameCreateText.getText(), lastNameCreateText.getText(), ageCreateText.getText(), civilStatusCreateText.getText(), occupationCreateText.getText(), contactNumCreateText.getText(), addressCreateText.getText()};
         ptnRecordsTable.addRow(data);
@@ -27,15 +28,19 @@ private void createCreateButtonActionPerformed(java.awt.event.ActionEvent evt) {
             }
 
             // Insert the new visit into the patientvisit table in the database
-            String queryVisit = "INSERT INTO patientvisit (primary_id, reason, price, date) VALUES (?, ?, ?, ?)";
+            String queryVisit = "INSERT INTO patientvisit (patient_id, reason, price, date) VALUES (?, ?, ?, ?);";
             try (Connection conn = db.connect();
                  PreparedStatement pstmt = conn.prepareStatement(queryVisit)) {
                 pstmt.setInt(1, nextId);
                 pstmt.setString(2, reasonCreateText.getText());  // Assuming reasonCreateText is the JTextField for the reason
-                pstmt.setDouble(3, Double.parseDouble(priceCreateText.getText()));  // Assuming priceCreateText is the JTextField for the price
-                pstmt.setDate(4, java.sql.Date.valueOf(dateCreateText.getText()));  // Assuming dateCreateText is the JTextField for the date
+                pstmt.setString(3, priceCreateText.getText());  // Assuming priceCreateText is the JTextField for the price
+                pstmt.setString(4, dateCreateText.getText());  // Assuming dateCreateText is the JTextField for the date
                 pstmt.executeUpdate();
             }
+
+            // Add the new visit to the patientHistoryTable
+            String dataVisit[] = {String.valueOf(nextId), reasonCreateText.getText(), priceCreateText.getText(), dateCreateText.getText()};
+            ptnHistoryTable.addRow(dataVisit);
 
             displayRecordList();
             givenNameCreateText.setText("");
@@ -46,12 +51,12 @@ private void createCreateButtonActionPerformed(java.awt.event.ActionEvent evt) {
             occupationCreateText.setText("");
             contactNumCreateText.setText("");
             addressCreateText.setText("");
-            reasonCreateText.setText("");  // Assuming reasonCreateText is the JTextField for the reason
-            priceCreateText.setText("");  // Assuming priceCreateText is the JTextField for the price
-            dateCreateText.setText("");  // Assuming dateCreateText is the JTextField for the date
+            reasonCreateText.setText("");  
+            priceCreateText.setText(""); 
+            dateCreateText.setText("");  
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-}
+}  
