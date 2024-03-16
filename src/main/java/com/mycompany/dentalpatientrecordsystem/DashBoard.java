@@ -30,7 +30,7 @@ import com.mycompany.dentalpatientrecordsystem.Database;
 
 /**
  *
- * @author Marki Querequincia
+ * @author Dan Arnaiz
  */
 public class DashBoard extends javax.swing.JFrame {
 

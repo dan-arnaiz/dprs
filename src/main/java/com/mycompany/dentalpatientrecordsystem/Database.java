@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  *
- * @author Ryzen
+ * @author Dan Arnaiz
  */
 public class Database {
     private String url = "jdbc:mysql://localhost:3306/dprs?zeroDateTimeBehavior=CONVERT_TO_NULL";

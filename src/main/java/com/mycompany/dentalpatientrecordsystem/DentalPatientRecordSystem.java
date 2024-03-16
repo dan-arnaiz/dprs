@@ -6,7 +6,7 @@ package com.mycompany.dentalpatientrecordsystem;
 
 /**
  *
- * @author Marki Querequincia
+ * @author Dan Arnaiz
  */
 
 
